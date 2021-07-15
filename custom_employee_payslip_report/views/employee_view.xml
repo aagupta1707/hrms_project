@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<record id="kitkat_view_employee_form" model="ir.ui.view">
+        <field name="name">hr.employee.form.ihnerit.kitkat</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='mobile_phone']" position="before">
+            	<field name="employee_no"/>
+				<field name="date_of_joining"/>
+            	<field name="function"/>
+            	<field name="bank_details"/>
+            	<field name="ifsc"/>
+            </xpath>
+            <xpath expr="//field[@name='parent_id']" position="after">
+            	<field name="tax_regime"/>
+            	<field name="income_tax_no"/>
+            	<field name="universal_account_no"/>
+            	<field name="pf_account_number"/>
+            	<field name="esi_number"/>
+            	<field name="pr_account_number"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

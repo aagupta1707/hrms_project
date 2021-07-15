@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+
+        <template id="employee_payslip_template_report_view">
+            <t t-call="web.html_container">
+                <t t-call="custom_employee_payslip_report.external_layout_payslip_header">
+                    <t t-foreach="docs" t-as="o">
+                        <div class="page">
+                            <p>
+                                <center style="font-size:15px;">
+                                    <span t-field="o.name"/>
+                                </center>
+                            </p>
+                            <p>
+                                <center style="font-size:15px;">
+                                    <b>
+                                        <span t-field="o.employee_id.name"/>
+                                    </b>
+                                </center>
+                            </p>
+                            <br/>
+                            <style>
+                                th,td{
+                                padding:5px;
+                                }
+                            </style>
+                            <table style="border-collapse: collapse;border: 1px solid black;width:100%;table-layout: fixed;">
+                                <tr>
+                                    <td style="border:1px solid black;width:20%">Employee Number :</td>
+                                    <td style="border:1px solid black;width:30%">
+                                        <span t-field="o.employee_id.employee_no"/>
+                                    </td>
+                                    <td style="border:1px solid black;width:20%">Tax Regime :</td>
+                                    <td style="border:1px solid black;width:30%">
+                                        <span t-field="o.employee_id.tax_regime"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid black;width:20%">Function :</td>
+                                    <td style="border:1px solid black;width:30%">
+                                        <span t-field="o.employee_id.function"/>
+                                    </td>
+                                    <td style="border:1px solid black;width:20%">Income Tax Number (PAN) :</td>
+                                    <td style="border:1px solid black;width:30%">
+                                        <span t-field="o.employee_id.income_tax_no"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid black;width:20%">Designation :</td>
+                                    <td style="border:1px solid black;width:30%">
+                                        <span t-field="o.employee_id.job_id.name"/>
+                                    </td>
+                                    <td style="border:1px solid black;width:20%">Universal Account Number (UAN) :</td>
+                                    <td style="border:1px solid black;width:30%">
+                                        <span t-field="o.employee_id.universal_account_no"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid black;width:20%">Location :</td>
+                                    <td style="border:1px solid black;width:30%">
+                                        <span t-field="o.employee_id.work_location"/>
+                                    </td>
+                                    <td style="border:1px solid black;width:20%">PF Account Number :</td>
+                                    <td style="border:1px solid black;width:30%">
+                                        <span t-field="o.employee_id.pf_account_number"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid black;width:20%">Bank Details :</td>
+                                    <td style="border:1px solid black;width:30%">
+                                        <span t-field="o.employee_id.ifsc"/>
+                                        <span t-field="o.employee_id.bank_details"/>
+                                    </td>
+                                    <td style="border:1px solid black;width:20%">ESI Number :</td>
+                                    <td style="border:1px solid black;width:30%">
+                                        <span t-field="o.employee_id.esi_number"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid black;width:20%">Date of Joining :</td>
+                                    <td style="border:1px solid black;width:30%">
+                                        <span t-field="o.employee_id.date_of_joining"/>
+                                    </td>
+                                    <td style="border:1px solid black;width:20%">PR Account Number (PRAN) :</td>
+                                    <td style="border:1px solid black;width:30%">
+                                        <span t-field="o.employee_id.pr_account_number"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <br/>
+                            <table align="center" style=" border-collapse: collapse;border: 1px solid black;width:50%;table-layout: fixed;">
+                                <thead>
+                                    <tr>
+                                        <td style="border:1px solid black" class="text-left" colspan="4">
+                                            <b>Attendance Details</b>
+                                        </td>
+                                        <td style="border:1px solid black" class="text-center">
+                                            <b>Value</b>
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="o.worked_days_line_ids" t-as="work_line">
+                                        <td style="border:1px solid black" colspan="4" class="text-left">
+                                            Present
+                                        </td>
+                                        <td style="border:1px solid black" class="text-right">
+                                            <span t-esc="work_line.number_of_days"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                            <br/>
+                            <t t-set="tot_amount_earning" t-value="0"/>
+                            <t t-set="tot_gross_salary" t-value="0"/>
+                            <t t-set="tot_amount_deduction" t-value="0"/>
+                            <t t-set="tot_gross_deduction" t-value="0"/>
+                            <table align="center" style="border-collapse: collapse;border: 1px solid black;width:100%;table-layout: fixed;">
+                                <tr>
+
+                                    <table style=" width:50%;table-layout:fixed;float:left;">
+                                        <thead>
+                                            <tr>
+                                                <td style="border:1px solid black" class="text-left" colspan="3">
+                                                    <b>Earnings</b>
+                                                </td>
+                                                <td style="border:1px solid black" class="text-center">
+                                                    <b>Amount</b>
+                                                </td>
+                                                <td style="border:1px solid black" class="text-center">
+                                                    <b>Gross Salary</b>
+                                                </td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr t-foreach="o.line_ids" t-as="line">
+                                                <t t-if="line.category_id.name != 'Deduction'">
+                                                    <td style="border:1px solid black" colspan="3" class="text-left">
+                                                        <span t-esc="line.name"/>
+                                                    </td>
+                                                    <td style="border:1px solid black" class="text-right">
+                                                        <span t-esc="line.amount"/>
+                                                    </td>
+                                                    <td style="border:1px solid black" class="text-right">
+                                                        <span t-esc="line.amount"/>
+                                                    </td>
+                                                    <t t-set="tot_amount_earning"
+                                                       t-value="tot_amount_earning + line.amount"/>
+                                                    <t t-set="tot_gross_salary" t-value="tot_gross_salary+line.amount"/>
+                                                </t>
+                                            </tr>
+                                            <tr>
+                                                <td style="border:1px solid black" colspan="3" class="text-left">
+                                                    <b>Total Earnings:</b>
+                                                </td>
+
+                                                <td style="border:1px solid black" class="text-right">
+                                                    <b>
+                                                        <span t-esc="'%.2f'% tot_amount_earning"/>
+                                                    </b>
+                                                </td>
+                                                <td style="border:1px solid black" class="text-right">
+                                                    <b>
+                                                        <span t-esc="'%.2f'% tot_gross_salary"/>
+                                                    </b>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+
+                                    </table>
+                                    <table style=" width:50%;table-layout:fixed;float: right;">
+                                        <thead>
+                                            <tr>
+                                                <td style="border:1px solid black" class="text-left" colspan="3">
+                                                    <b>Deductions</b>
+                                                </td>
+                                                <td style="border:1px solid black" class="text-center">
+                                                    <b>Amount</b>
+                                                </td>
+                                                <td style="border:1px solid black" class="text-center">
+                                                    <b>Gross Salary</b>
+                                                </td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr t-foreach="o.line_ids" t-as="line">
+                                                <t t-if="line.category_id.name == 'Deduction'">
+                                                    <td style="border:1px solid black" colspan="3" class="text-left">
+                                                        <span t-esc="line.name"/>
+                                                    </td>
+                                                    <td style="border:1px solid black" class="text-right">
+                                                        <span t-esc="line.amount"/>
+                                                    </td>
+                                                    <td style="border:1px solid black" class="text-right">
+                                                        <span t-esc="line.amount"/>
+                                                    </td>
+                                                    <t t-set="tot_amount_deduction" t-value="tot_amount_deduction + line.amount"/>
+                                                    <t t-set="tot_gross_deduction"
+                                                       t-value="tot_gross_deduction + line.amount"/>
+                                                </t>
+                                            </tr>
+                                            <tr>
+                                                <td style="border:1px solid black" colspan="3" class="text-left">
+                                                    <b>Total Deductions:</b>
+                                                </td>
+
+                                                <td style="border:1px solid black" class="text-right">
+                                                    <b>
+                                                        <span t-esc="'%.2f'% tot_amount_deduction"/>
+                                                    </b>
+                                                </td>
+                                                <td style="border:1px solid black" class="text-right">
+                                                    <b>
+                                                        <span t-esc="'%.2f'% tot_gross_deduction"/>
+                                                    </b>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+
+                                    </table>
+                                </tr>
+                            </table>
+                            <br/>
+                            <table style="border-collapse: collapse;border: 1px solid black;width:100%;table-layout: fixed;">
+                                <tr>
+                                    <table style="width:50%;table-layout:fixed;float: left;">
+
+                                    </table>
+                                    <table style="border-collapse: collapse;border: 1px solid black;width:50%;table-layout:fixed;float: right;">
+                                        <td style="border:1px solid black" colspan="3" class="text-left">
+                                            <b>Net Amount:</b>
+                                        </td>
+
+                                        <td style="border:1px solid black" class="text-right">
+                                            <b> <span t-esc="'%.2f'% (tot_amount_earning - tot_amount_deduction)"/> </b>
+                                        </td>
+                                        <td style="border:1px solid black" class="text-right">
+                                            <b> <span t-esc="'%.2f'% (tot_gross_salary - tot_gross_deduction)"/> </b>
+                                        </td>
+                                    </table>
+                                </tr>
+                            </table>
+                            <br/>
+
+                            <table style="border:1x solid white;width:100%;">
+                                <tr>
+                                    <td style="width:50%;float:left">
+                                        Amount (in words):
+                                    </td>
+                                    <td style="float:right;font-weight:bold">
+                                        for <span t-esc="o.company_id.name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><t t-esc="o.get_amount_in_words((tot_gross_salary - tot_gross_deduction))"/></td>
+                                    <td><pre/></td>
+                                </tr>
+                                <tr>
+                                    <td><pre/></td>
+                                    <td><pre/></td>
+                                </tr>
+                                <tr>
+                                    <td><pre/></td>
+                                    <td><pre/></td>
+                                </tr>
+                                <tr>
+                                    <td><pre/></td>
+                                    <td style="float:right">Authorised Signatory</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <template id="employee_payslip_template_id">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="custom_employee_payslip_report.employee_payslip_template_report_view"/>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

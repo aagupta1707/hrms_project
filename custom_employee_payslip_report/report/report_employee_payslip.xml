@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <report id="hr_payslip_report_id"
+                string="Print Employee Payslip"
+                model="hr.payslip"
+                report_type="qweb-pdf"
+                file="custom_employee_payslip_report.employee_payslip_template_id"
+                name="custom_employee_payslip_report.employee_payslip_template_id"/>
+
+
+        <record id="paperformat_report_employee_payslip" model="report.paperformat">
+            <field name="name">Employee Payslip Format</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">210</field>
+            <field name="page_width">297</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">10</field>
+            <field name="margin_bottom">1</field>
+            <field name="margin_left">1</field>
+            <field name="margin_right">1</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">35</field>
+            <field name="dpi">90</field>
+        </record>
+
+    </data>
+
+    <template id="external_layout_payslip_header">
+        <div class="header">
+            <div style="font-size:15px;">
+                <center>
+                    <strong>
+                        <span t-esc="o.company_id.name"></span>
+                    </strong>
+                </center>
+                <center>
+                    <p>
+                        <span t-field="o.company_id.street"/>
+                        <br/>
+                        <span t-field="o.company_id.street2"/>
+                        <br/>
+                        <span t-field="o.company_id.city"/>-
+                        <span t-field="o.company_id.zip"/>
+                    </p>
+                </center>
+            </div>
+            <div style="border-bottom: 1px solid black; font-size: 20px">
+                <center>
+                    <strong>CIN:</strong>
+                    <span t-esc="o.company_id.vat"></span>
+                </center>
+            </div>
+        </div>
+        <div class="article o_report_layout_standard">
+            <t t-raw="0"/>
+        </div>
+    </template>
+</odoo>
