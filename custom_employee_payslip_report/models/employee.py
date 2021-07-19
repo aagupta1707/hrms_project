@@ -18,7 +18,6 @@ class HrEmployee(models.Model):
     pf_account_number = fields.Char(string='PF Account Number')
     esi_number = fields.Char(string='ESI Number')
     pr_account_number = fields.Char(string='PR Account Number (PRAN)')
-    date_of_joining = fields.Date('Date of Joining')
 
 class HrPayslipInherit(models.Model):
     _inherit = 'hr.payslip'

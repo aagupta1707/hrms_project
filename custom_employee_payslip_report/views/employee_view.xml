@@ -7,7 +7,7 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='mobile_phone']" position="before">
             	<field name="employee_no"/>
-				<field name="date_of_joining"/>
+				<field name="joining_date" readonly="False"/>
             	<field name="function"/>
             	<field name="bank_details"/>
             	<field name="ifsc"/>

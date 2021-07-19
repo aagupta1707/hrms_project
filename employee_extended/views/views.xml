@@ -1,0 +1,36 @@
+<odoo>
+    <data>
+        <menuitem action="om_hr_payroll.action_view_hr_payslip_form" id="om_hr_payroll.menu_department_tree"
+                  parent="om_hr_payroll.menu_hr_payroll_root"
+                  groups="om_hr_payroll.group_hr_payroll_user,employee_extended.group_employee,employee_extended.group_hr,employee_extended.group_administration"/>
+
+        <menuitem id="hr_attendance.menu_hr_attendance_root" name="Attendances" sequence="90"
+                  groups="hr_attendance.group_hr_attendance,employee_extended.group_employee,employee_extended.group_hr,employee_extended.group_administration"
+                  web_icon="hr_attendance,static/description/icon.png"/>
+
+        <menuitem id="hr_attendance.menu_hr_attendance_my_attendances" name="Check In / Check Out"
+                  parent="hr_attendance.menu_hr_attendance_root" sequence="10"
+                  groups="hr_attendance.group_hr_attendance,employee_extended.group_employee,employee_extended.group_hr,employee_extended.group_administration"
+                  action="hr_attendance.hr_attendance_action_my_attendances"/>
+
+        <menuitem name="Events" id="event.event_main_menu" sequence="65" groups="event.group_event_user,employee_extended.group_employee,employee_extended.group_hr,employee_extended.group_administration"
+                  web_icon="event,static/description/icon.png"/>
+
+        <menuitem name="Events" id="event.menu_event_event" action="event.action_event_view" parent="event.event_main_menu" />
+        <menuitem name="Events"
+            id="event.event_event_menu_pivot_report"
+            action="event.event_event_action_pivot"
+            sequence="3"
+            parent="event.menu_reporting_events"
+            groups="event.group_event_manager,employee_extended.group_employee,employee_extended.group_hr,employee_extended.group_administration"/>
+
+        <menuitem name="Project"
+            id="project.menu_main_pm"
+            groups="project.group_project_manager,project.group_project_user,employee_extended.group_employee,employee_extended.group_hr,employee_extended.group_administration"
+            web_icon="project,static/description/icon.png"
+            sequence="50"/>
+
+        <menuitem name="All Tasks" id="project.menu_project_management" parent="project.menu_main_pm"
+            action="project.action_view_task" sequence="2" groups="base.group_no_one,project.group_project_user,employee_extended.group_employee,employee_extended.group_hr,employee_extended.group_administration"/>
+    </data>
+</odoo>

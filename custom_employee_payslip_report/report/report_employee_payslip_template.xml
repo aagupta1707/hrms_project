@@ -81,7 +81,7 @@
                                 <tr>
                                     <td style="border:1px solid black;width:20%">Date of Joining :</td>
                                     <td style="border:1px solid black;width:30%">
-                                        <span t-field="o.employee_id.date_of_joining"/>
+                                        <span t-field="o.employee_id.joining_date"/>
                                     </td>
                                     <td style="border:1px solid black;width:20%">PR Account Number (PRAN) :</td>
                                     <td style="border:1px solid black;width:30%">
